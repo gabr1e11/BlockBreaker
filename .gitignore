@@ -1,0 +1,15 @@
+*.sln
+*.userprefs
+*.csproj
+*.pidb
+*.unityproj
+.DS_Store
+/Library/
+/obj
+/Temp
+/Builds
+WebGL/
+MinePrototype1*
+Player.log
+*_Data
+*.exe
