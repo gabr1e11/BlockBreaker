@@ -19,4 +19,10 @@ public class LevelManager : MonoBehaviour {
 	{
 		Application.Quit ();
 	}
+
+	public void BrickDestroyed()
+	{
+		if (Brick.TotalBricks <= 0)
+			LoadNextLevel ();
+	}
 }

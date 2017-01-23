@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour {
     private Rigidbody2D m_rigidBody;
     private bool m_isGameStarted;
     private Paddle m_paddle;
+	private AudioSource m_audioSource;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +16,7 @@ public class Ball : MonoBehaviour {
 
         m_paddleToBallVector = this.transform.position - m_paddle.transform.position;
         m_rigidBody = GetComponent<Rigidbody2D>();
+		m_audioSource = GetComponent<AudioSource> ();
         m_isGameStarted = false;
     }
 	
@@ -30,5 +32,11 @@ public class Ball : MonoBehaviour {
                 m_isGameStarted = true;
             }
         }
+	}
+
+	void OnCollisionEnter2D(Collision2D coll)
+	{
+		if (m_isGameStarted)
+			m_audioSource.Play ();
 	}
 }
