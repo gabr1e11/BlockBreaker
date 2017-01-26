@@ -12,6 +12,9 @@ public class Paddle : MonoBehaviour {
 	void Start () {
         this.transform.position = new Vector3(8.0f, 0.5f, 0.0f);
 		m_ball = GameObject.FindObjectOfType<Ball> ();
+
+        if (m_autoPlay)
+            Time.timeScale = 10.0f;
     }
 	
 	// Update is called once per frame

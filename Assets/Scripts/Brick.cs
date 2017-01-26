@@ -8,6 +8,7 @@ public class Brick : MonoBehaviour {
 	public static int TotalBricks = 0;
 	public AudioClip m_crack;
 	public AudioClip m_hit;
+    public ParticleSystem m_smoke;
 
     private int m_timesHit;
     private LevelManager m_levelManager;
@@ -40,22 +41,34 @@ public class Brick : MonoBehaviour {
 		m_timesHit++;
 
 		if (m_timesHit == maxHits) {
-			AudioSource.PlayClipAtPoint (m_crack, transform.position, 0.5f);
-			TotalBricks--;
+			AudioSource.PlayClipAtPoint (m_crack, transform.position, 0.8f);
+
+            PuffSmoke();
+
+            TotalBricks--;
 			Destroy (gameObject);
 			m_levelManager.BrickDestroyed ();
 		} else {
-			AudioSource.PlayClipAtPoint (m_hit, transform.position);
+			AudioSource.PlayClipAtPoint (m_hit, transform.position, 1.0f);
 			LoadSprites ();
 		}
 	}
+
+    void PuffSmoke()
+    {
+        ParticleSystem smokePuff = GameObject.Instantiate(m_smoke, transform.position, Quaternion.identity) as ParticleSystem;
+        var mainModule = smokePuff.main;
+        mainModule.startColor = m_spriteRenderer.color;
+    }
 
 	void LoadSprites()
 	{
 		int spriteIndex = m_timesHit - 1;
 
-		if (hitSprites[spriteIndex] != null)
-			m_spriteRenderer.sprite = hitSprites[spriteIndex];
+        if (hitSprites[spriteIndex] != null)
+            m_spriteRenderer.sprite = hitSprites[spriteIndex];
+        else
+            Debug.LogError("Sprite for position " + spriteIndex + " is not valid");
 	}
 
     void SimulateWin()
